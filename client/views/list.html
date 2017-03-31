@@ -1,0 +1,12 @@
+<div class="page-head"></div>
+
+<button id="compose" ng-click="goToCompose()">Compose</button>
+<div id="eachPost">
+    <div ng-repeat="blog in blogposts">
+        <h1>{{ blog.title }}</h1>
+        <h2>{{ blog.categoryname }}</h2>
+        <h3> {{ blog.authorfirstname}} {{ blog.authorlastname}}</h3>
+        <h5> {{ blog.createdAt | date: 'short' }}</h5>
+        <p ng-click="goToSinglePost(blog.id)">Read This Post</p>
+    </div>
+</div>

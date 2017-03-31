@@ -1,0 +1,14 @@
+<div id="single-page">
+    <div>
+        <h1 id="title"> Title: {{singleblog.title }}</h1>
+        <h2> Author: {{singleblog.firstname }} {{singleblog.lastname }}</h2>
+        <h3> Content: {{ singleblog.content }}</h3>
+        <h4>Category: {{ singleblog.categoryname}}</h4>
+        <h5>Date: {{singleblog.createdAt | date: 'short'}}</h5>
+    </div>
+    <div>
+        <button ng-click="goToEdit()">Edit</button>
+        <button ng-click="deletePost()">Delete</button>
+        <button ng-click="goBack()">Go Back</button>
+    </div>
+</div>

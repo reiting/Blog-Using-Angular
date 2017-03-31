@@ -1,0 +1,38 @@
+body {
+    font-family: 'Indie Flower', cursive;
+}
+
+.page-head {
+    background-image: url('http://www.discardedimage.com/wp-content/uploads/2013/08/writing.jpg');
+    background-size: cover;
+    background-position: 25px;
+    background-repeat: no-repeat;
+    height: 30em;
+}
+
+button {
+    font-size: 1.5em;
+    margin-top: 1em;
+    background-color: white;
+    color: black;
+    border: solid 2px green;
+    transition-duration: 0.4s;
+    font-family: 'Indie Flower', cursive;
+}
+
+button:hover {
+    background-color: green;
+    color: white;    
+}
+
+#single-page {
+    background-image: url("http://3.bp.blogspot.com/_JR1wtGyGotU/TVCRf9Q-LrI/AAAAAAAACsA/464bEMpep3U/s1600/LoveTag2.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    min-height: 100vh;
+}
+
+#title {
+    margin-top: -10px;
+}
