@@ -1,21 +1,28 @@
 angular.module('RachelsBlog.controllers', [])
 
-    .controller('ListController', ['$scope', '$http', 'PostFactory', '$location', function($scope, $http, PostFactory, $location) {
+    .controller('ListController', ['$scope', '$http', 'PostFactory', '$location', function ($scope, $http, PostFactory, $location) {
 
         $scope.blogposts = PostFactory.query();
 
-        $scope.goToSinglePost = function(id) {
+        $scope.goToSinglePost = function (id) {
             $location.path('/' + id);
         }
 
-        $scope.goToCompose = function() {
+        $scope.goToCompose = function () {
             $location.path('/compose');
         }
     }])
 
-    .controller('ComposeController', ['$scope', '$http', 'UserFactory', 'CategoryFactory', 'PostFactory', '$location', function($scope, $http, UserFactory, CategoryFactory, PostFactory, $location) {
+    .controller('CategoryController', ['$scope', '$http', 'CategoryFactory', function ($scope, $http, CategoryFactory) {
+        
+        $scope.categories = CategoryFactory.query();
+        // console.log($scope.categories);
+    }])
+
+    .controller('ComposeController', ['$scope', '$http', 'UserFactory', 'CategoryFactory', 'PostFactory', '$location', function ($scope, $http, UserFactory, CategoryFactory, PostFactory, $location) {
 
         $scope.users = UserFactory.query();
+        console.log($scope.users);
 
         $scope.categories = CategoryFactory.query();
 
@@ -23,9 +30,11 @@ angular.module('RachelsBlog.controllers', [])
             var newPost = new PostFactory({
                 title: $scope.title,
                 content: $scope.content,
+                // userid: $scope.userid,
+                categoryid: $scope.catID,
                 userid: Number($('#user-selector').val()),
-                categoryid: Number($('#cat-selector').val())
-                
+                // categoryid: Number($('#cat-selector').val())
+
             });
             console.log(newPost);
             newPost.$save(function (success) {
@@ -34,77 +43,76 @@ angular.module('RachelsBlog.controllers', [])
         }
     }])
 
-    .controller('SingleController', ['$scope', '$http', 'UserFactory', 'CategoryFactory', 'PostFactory', '$location', '$routeParams', function($scope, $http, UserFactory, CategoryFactory, PostFactory, $location, $routeParams) {
+    .controller('SingleController', ['$scope', '$http', 'UserFactory', 'CategoryFactory', 'PostFactory', '$location', '$routeParams', function ($scope, $http, UserFactory, CategoryFactory, PostFactory, $location, $routeParams) {
         var id = $routeParams.id;
-        PostFactory.get({id: $routeParams.id}, function(success) {
+        PostFactory.get({ id: $routeParams.id }, function (success) {
             $scope.singleblog = success;
-        }, function(err) {
+        }, function (err) {
             console.log(err);
         });
 
-        $scope.goToEdit = function() {
+        $scope.goToEdit = function () {
             $location.path('/' + id + '/update');
-        }                
+        }
 
-        $scope.deletePost = function() {
-            $scope.singleblog.$delete(function() {
+        $scope.deletePost = function () {
+            $scope.singleblog.$delete(function () {
                 $location.path('/');
             })
         }
 
-        $scope.goBack = function() {
+        $scope.goBack = function () {
             $location.path('/');
         }
     }])
 
-    .controller('UpdateController', ['$scope', '$http', 'UserFactory', 'CategoryFactory', 'PostFactory', '$location', '$routeParams', function($scope, $http, UserFactory, CategoryFactory, PostFactory, $location, $routeParams) {
-        
-        var id = $routeParams.id;
+    .controller('UpdateController', ['$scope', '$http', 'UserFactory', 'CategoryFactory', 'PostFactory', '$location', '$routeParams', function ($scope, $http, UserFactory, CategoryFactory, PostFactory, $location, $routeParams) {
 
-        
+        // var id = $routeParams.id;
+
+
         $scope.users = UserFactory.query();
 
         $scope.categories = CategoryFactory.query();
-        
-        PostFactory.get({id: $routeParams.id}, function(success) {
+
+        PostFactory.get({ id: $routeParams.id }, function (success) {
             $scope.singleblog = success;
             console.log(success);
-           $scope.categoryname = success.categoryname;
-           console.log($scope.categoryname);
-           $scope.selCat = success.categoryid;
-           console.log(success.categoryid);
-                })
+            // $scope.categoryname = success.categoryname;
+            // console.log($scope.categoryname);
+            $scope.selCat = success.categoryid;
+            // console.log(success.categoryid);
+        })
 
-        $scope.updatePost = function(id) {
+        $scope.updatePost = function () {
             $scope.singleblog.categoryid = $scope.selCat;
-            $scope.singleblog.$update(function(success) {
-                // $scope.categoryid;
-                $location.path('/' + id);
+            $scope.singleblog.$update(function (success) {
+                console.log(success);
+                $location.path('/' + $routeParams.id);
             })
         }
     }])
-    .controller('UserController', ['$scope', 'UserFactory', 'UserService', function($scope, UserFactory, UserService) {
+    .controller('UserController', ['$scope', 'UserFactory', 'UserService', function ($scope, UserFactory, UserService) {
         UserService.requireLogin();
-        $scope.users = User.query();
+        $scope.users = UserFactory.query();
     }])
 
-    .controller('LoginController', ['$scope', '$location', 'UserService', function($scope, $location, UserService) {
-        UserService.me().then(function(success) {
-            console.log(success);
+    .controller('LoginController', ['$scope', '$location', 'UserService', function ($scope, $location, UserService) {
+        UserService.me().then(function (success) {
             // redirect();
         })
         function redirect() {
             var dest = $location.search().p;
-            if(!dest) { dest = '/'; } 
+            if (!dest) { dest = '/'; }
             $location.path(dest).search('p', null);
         }
 
-        $scope.login = function() {
+        $scope.login = function () {
             UserService.login($scope.email, $scope.password)
-            .then(function() {
-                redirect();
-            }), function(err) {
-                console.log(err);
-            }
+                .then(function () {
+                    redirect();
+                }), function (err) {
+                    console.log(err);
+                }
         }
     }]);

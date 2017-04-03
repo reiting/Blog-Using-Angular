@@ -1,21 +1,21 @@
 var db = require('../config/db');
 
 exports.all = function() {
-    return db.rows("GetAllPosts");
+    return db.rows("GetAllPosts", []);
 }
 
-exports.post = function(userid, categoryid, content, title) {
-    return db.empty("PostBlog(?, ?, ?, ?)", [userid, categoryid, content, title]);
+exports.post = function(p) {
+    return db.empty("PostBlog", [p.userid, p.categoryid, p.content, p.title]);
 }
 
 exports.read = function(id) {
-    return db.row("GetSinglePost(?)", [id]);
+    return db.row("GetSinglePost", [id]);
 }
 
-exports.update=function(title, content, categoryid, id) {
-    return db.empty("UpdatePost(?, ?, ?, ?)", [title, content, categoryid, id]);
+exports.update=function(p) {
+    return db.empty("UpdatePost", [p.title, p.content, p.categoryid, p.id]);
 }
 
 exports.destroy=function(id) {
-    return db.empty('DeletePost(?)', [id]);
+    return db.empty('DeletePost', [id]);
 }

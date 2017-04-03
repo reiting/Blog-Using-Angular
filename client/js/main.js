@@ -18,6 +18,10 @@ angular.module('RachelsBlog', ['ngRoute', 'ngResource', 'RachelsBlog.controllers
             templateUrl: 'views/users.html',
             controller: 'UserController'
         })
+        .when('/categories', {
+            templateUrl: 'views/categories.html',
+            controller: 'CategoryController'
+        })
         .when('/:id/update', {
             templateUrl: 'views/update.html',
             controller: 'UpdateController'

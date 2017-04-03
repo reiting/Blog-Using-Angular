@@ -1,16 +1,14 @@
-<div>
-    <input type="text" ng-model="singleblog.title" placeholder="Put your Title here!">
-</div>
-<div>
+<div id="update-page">
+    <div id="inner-page">
+    Title:</br>
+     <input type="text" ng-model="singleblog.title" placeholder="Put your Title here!"></br>
+    Category:</br> 
     <select id="cat-selector" ng-model="selCat">
         <option ng-repeat="category in categories" value="{{ category.id }}">
             {{ category.name }}
         </option>
-    </select>
-</div>
-<div>
-    <textarea ng-model="singleblog.content"></textarea>
-</div>
-<div>
-    <button ng-click="updatePost(singleblog.id)">Update</button>
+    </select></br>
+    Your Post: </br><textarea ng-model="singleblog.content"></textarea></br>
+    <button class="single-buttons" ng-click="updatePost()">Update</button>
+    </div>
 </div>

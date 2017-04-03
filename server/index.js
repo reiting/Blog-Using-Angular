@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var api = require('./api');
 var cookieParser = require('cookie-parser');
 var configurePassPort = require('./config/passport');
+var routeMw= require('./middleware/routing.mw');
 // var mysql = require('mysql');
 
 // var pool = mysql.createPool({
@@ -25,6 +26,14 @@ app.use(cookieParser());
 
 configurePassPort(app);
 app.use('/api', api);
+
+app.get("*", function(req, res, next) {
+    if(routeMw.isAsset(req.url)) {
+        next();
+    } else {
+        res.sendFile(path.join(__dirname, '../client/index.html'));
+    }
+})
 
 // function getAllPosts() {
 //     return new Promise(function (resolve, reject) {
@@ -217,33 +226,33 @@ app.use('/api', api);
 //     })
 // })
 
-function isAsset(path) {
-   var pieces = path.split('/');
-   //IF OUR ARRAY IS EMPTY THEN ITS NOT AN ASSET
-   if (pieces.length === 0) {
-       return false;
-   }
-   //GET THE LAST ITEM IN OUR ARRAW OF STRINGS
-   var last = pieces[pieces.length - 1];
-   //IF THE PATH CONTAINS '/API' OR '/?' THEN ITS AN ASSET
-   if (path.indexOf("/api") !== -1 || path.indexOf("/?") !== -1) {
-       return true;
-       //IF THE LAST ITEM IN OUR ARRAY CONTA A '.' THEN ITS AN ASSET
-   } else if (last.indexOf('.') !== -1) {
-       return true;
-       //OTHERWISE...ITS NOT AN ASSET
-   } else {
-       return false;
-   }
-}
+// function isAsset(path) {
+//    var pieces = path.split('/');
+//    //IF OUR ARRAY IS EMPTY THEN ITS NOT AN ASSET
+//    if (pieces.length === 0) {
+//        return false;
+//    }
+//    //GET THE LAST ITEM IN OUR ARRAW OF STRINGS
+//    var last = pieces[pieces.length - 1];
+//    //IF THE PATH CONTAINS '/API' OR '/?' THEN ITS AN ASSET
+//    if (path.indexOf("/api") !== -1 || path.indexOf("/?") !== -1) {
+//        return true;
+//        //IF THE LAST ITEM IN OUR ARRAY CONTA A '.' THEN ITS AN ASSET
+//    } else if (last.indexOf('.') !== -1) {
+//        return true;
+//        //OTHERWISE...ITS NOT AN ASSET
+//    } else {
+//        return false;
+//    }
+// }
 
-app.get("*", function(req, res, next){
-   if(isAsset(req.url)){
-       return next();
-   }else{
-       res.sendFile(path.join(clientPath, "index.html"))
-   }
-});
+// app.get("*", function(req, res, next){
+//    if(isAsset(req.url)){
+//        return next();
+//    }else{
+//        res.sendFile(path.join(clientPath, "index.html"))
+//    }
+// });
 
 app.listen(3000);
 console.log('server listening on port 3000');

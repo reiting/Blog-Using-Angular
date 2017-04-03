@@ -25,14 +25,28 @@ button:hover {
     color: white;    
 }
 
-#single-page {
+#single-page, #update-page {
     background-image: url("http://3.bp.blogspot.com/_JR1wtGyGotU/TVCRf9Q-LrI/AAAAAAAACsA/464bEMpep3U/s1600/LoveTag2.gif");
     background-size: cover;
     background-repeat: no-repeat;
     text-align: center;
     min-height: 100vh;
 }
+#inner-page {
+    text-align: center;
+}
 
 #title {
     margin-top: -10px;
+}
+
+.single-buttons {
+    background-color: white;
+    border: solid 2px #EA4E7C;
+    color: black;
+}
+
+.single-buttons:hover {
+    background-color: #EA4E7C;
+    color: white;
 }

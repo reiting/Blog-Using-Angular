@@ -1,5 +1,5 @@
 var db = require('../config/db');
 
 exports.all = function() {
-    return db.rows("GetAllUsers");
+    return db.rows("GetAllUsers", []);
 }
