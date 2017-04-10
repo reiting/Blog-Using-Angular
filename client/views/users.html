@@ -1,9 +1,6 @@
 
 <h1>User Management Page</h1>
-<div ng-repeat="user in users">
-    <h1>{{ user.firstname}} {{user.lastname}}</h1>
-    <p ng-click="goToSingleUser(user.id)">Manage User</p>
-</div>
+<h2>Create A User</h2>
 <div>
     <input type="text" ng-model="firstname" placeholder="First Name">
     <input type="text" ng-model="lastname" placeholder="Last Name">
@@ -12,4 +9,11 @@
     <input type="password" ng-model="password" placeholder="Password">
 </div>
 <button ng-click="createUser()">Create New User</button>
+<hr>
+<h2>Current Users</h2>
+<div ng-repeat="user in users">
+    <h1>{{ user.firstname}} {{user.lastname}}</h1>
+    <p ng-click="goToSingleUser(user.id)">Manage User</p>
+</div>
+
 <button ng-click="logout()">Logout</button>

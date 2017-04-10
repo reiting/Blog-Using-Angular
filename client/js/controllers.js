@@ -124,7 +124,7 @@ angular.module('RachelsBlog.controllers', [])
         }])
     .controller('UserController', ['$scope', 'UserFactory', 'UserService', '$location', 'SEOService',
         function ($scope, UserFactory, UserService, $location, SEOService) {
-            UserService.requireLogin();
+            UserService.requireLogin(true);
             $scope.users = UserFactory.query();
 
             $scope.goToSingleUser = function (id) {
@@ -141,7 +141,8 @@ angular.module('RachelsBlog.controllers', [])
 
                 });
                 newUser.$save(function (success) {
-                    $location.path('/login');
+                    // $location.path('/login');
+                    $scope.users = UserFactory.query();
                 });
             }
 

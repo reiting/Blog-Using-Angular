@@ -9,17 +9,19 @@ angular.module('RachelsService.services', [])
                 return true;
             }
         }
-        this.requireLogin = function () {
+        this.requireLogin = function (checkAdmin) {
             if (!this.isLoggedIn()) {
                 var current = $location.path();
                 $location.path('/login').search('p', current);
+            } else if (checkAdmin && !this.isAdmin()) {
+                $location.path('/');
             }
         }
         this.isAdmin = function (role) {
-            if (user.role !== 'admin') {
-                    $location.path('/');
+            if (!user) {
+                return false;
             } else {
-                return true;
+                return user.role === "admin";
             }
         }
 
