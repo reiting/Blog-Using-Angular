@@ -1,4 +1,3 @@
-// var express = require('express');
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -6,6 +5,7 @@ var api = require('./api');
 var cookieParser = require('cookie-parser');
 var configurePassPort = require('./config/passport');
 var routeMw= require('./middleware/routing.mw');
+var prerender = require('prerender-node');
 // var mysql = require('mysql');
 
 // var pool = mysql.createPool({
@@ -22,18 +22,22 @@ var clientPath = path.join(__dirname, "../client");
 
 app.use(express.static(clientPath));
 app.use(bodyParser.json());
+//order matters for these!
 app.use(cookieParser());
-
 configurePassPort(app);
+
 app.use('/api', api);
 
-app.get("*", function(req, res, next) {
-    if(routeMw.isAsset(req.url)) {
-        next();
-    } else {
-        res.sendFile(path.join(__dirname, '../client/index.html'));
-    }
-})
+// var prerender = require('prerender-node').set('prerenderServiceUrl', 'http://localhost:1337/');
+prerender.set('prerenderToken', 'XD6N4kN4l1mC0p7p0Jce');
+app.use(prerender);
+// app.get("*", function(req, res, next) {
+//     if(routeMw.isAsset(req.url)) {
+//         next();
+//     } else {
+//         res.sendFile(path.join(__dirname, '../client/index.html'));
+//     }
+// })
 
 // function getAllPosts() {
 //     return new Promise(function (resolve, reject) {

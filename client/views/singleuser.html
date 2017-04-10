@@ -1,0 +1,8 @@
+<h1>Manage this User</h1>
+
+<div>
+    <h1>Name: {{ singleuser.firstname }} {{ singleuser.lastname }}</h1>
+</div>
+
+<button ng-click="deleteUser(singleuser.id)">DELETE</button>
+<button ng-click="goToUpdateUser()">Update</button>

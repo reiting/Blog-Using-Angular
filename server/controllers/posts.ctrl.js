@@ -4,7 +4,7 @@ var auth = require('../middleware/routing.mw');
 
 var router = express.Router();
 
-router.route('/')
+router.route('/', auth.isLoggedIn)
     .get(function (req, res) {
         procedures.all()
             .then(function (success) {
@@ -25,7 +25,7 @@ router.route('/')
             });
     })
 
-router.route('/:id')
+router.route('/:id', auth.isLoggedIn)
 
     .get(function (req, res) {
         procedures.read(req.params.id)
@@ -47,15 +47,14 @@ router.route('/:id')
             });
     })
 
-    .delete(function (req, res) {
-        procedures.destroy(req.params.id)
-            .then(function (success) {
-                res.sendStatus(204);
-            }, function (err) {
-                console.log(err);
-                res.status(500).send(err);
-            });
-    })
-
+router.delete('/:id', auth.isLoggedIn, auth.isAdmin, function (req, res) {
+    procedures.destroy(req.params.id)
+        .then(function (success) {
+            res.sendStatus(204);
+        }, function (err) {
+            console.log(err);
+            res.status(500).send(err);
+        });
+})
 
 module.exports = router;

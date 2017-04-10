@@ -22,6 +22,18 @@ angular.module('RachelsBlog', ['ngRoute', 'ngResource', 'RachelsBlog.controllers
             templateUrl: 'views/categories.html',
             controller: 'CategoryController'
         })
+        .when('/donations', {
+            templateUrl: 'views/donations.html',
+            controller: 'DonationController'
+        })
+        .when('/users/:id', {
+            templateUrl: 'views/singleuser.html',
+            controller: 'SingleUserController'
+        })
+        .when('/users/:id/update', {
+            templateUrl: 'views/updateuser.html',
+            controller: 'UpdateUserController'
+        })
         .when('/:id/update', {
             templateUrl: 'views/update.html',
             controller: 'UpdateController'

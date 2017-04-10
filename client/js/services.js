@@ -2,46 +2,65 @@ angular.module('RachelsService.services', [])
     .service('UserService', ['$http', '$location', function ($http, $location) {
         var user;
 
-        this.isLoggedIn = function() {
-            if (user) {
-                return true;
-            } else {
+        this.isLoggedIn = function () {
+            if (!user) {
                 return false;
+            } else {
+                return true;
             }
         }
-        this.requireLogin = function() {
-            if(!this.isLoggedIn()) {
+        this.requireLogin = function () {
+            if (!this.isLoggedIn()) {
                 var current = $location.path();
                 $location.path('/login').search('p', current);
             }
         }
-        this.login = function(email, password) {
+        this.isAdmin = function (role) {
+            if (user.role !== 'admin') {
+                    $location.path('/');
+            } else {
+                return true;
+            }
+        }
+
+        this.login = function (email, password) {
             return $http({
                 method: 'POST',
                 url: 'http://localhost:3000/api/users/login',
                 data: { email, password }
-            }).then(function(success) {
+            }).then(function (success) {
                 user = success.data;
                 return success.data;
-            });
-        }
-        this.logout = function() {
+            })
+        };
+        this.logout = function () {
             return $http({
                 method: 'GET',
                 url: 'http://localhost:3000/api/users/logout'
-            }).then(function(success) {
+            }).then(function (success) {
                 user = undefined;
             });
         }
-        this.me = function() {
-            if(user) { return Promise.resolve(user); }
+        this.me = function () {
+            if (user) { return Promise.resolve(user); }
             else {
                 return $http({
+                    method: 'GET',
                     url: 'http://localhost:3000/api/users/me'
-                }).then(function(success) {
+                }).then(function (success) {
                     user = success.data;
                     return success.data;
                 });
             }
         }
     }])
+
+    .service('SEOService', ['$rootScope', 
+    function($rootScope) {
+        this.setSEO = function(data) {
+            $rootScope.seo = {};
+            for (var p in data) {
+                $rootScope.seo[p] = data[p];
+            }
+        }
+    }]);
