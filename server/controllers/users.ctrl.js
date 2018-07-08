@@ -7,15 +7,15 @@ var sg = require('../services/email.svc');
 var router = express.Router();
 
 
-router.get('/generateHash/:pw', function(req, res) {
-    utils.encryptPassword(req.params.pw)
-    .then(function(hash) {
-        res.send(hash);
-    }, function(err) {
-        console.log(err);
-        res.sendStatus(500);
-    });
-})
+// router.get('/generateHash/:pw', function(req, res) {
+//     utils.encryptPassword(req.params.pw)
+//     .then(function(hash) {
+//         res.send(hash);
+//     }, function(err) {
+//         console.log(err);
+//         res.sendStatus(500);
+//     });
+// })
 
 
 router.post('/login', function (req, res, next) {

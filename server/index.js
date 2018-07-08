@@ -8,13 +8,13 @@ var routeMw= require('./middleware/routing.mw');
 var prerender = require('prerender-node');
 // var mysql = require('mysql');
 
-// var pool = mysql.createPool({
-//     connectionLimit: 10,
-//     host: 'localhost',
-//     user: 'rachelblog',
-//     password: 'Blog',
-//     database: 'AngularBlog'
-// });
+ var pool = mysql.createPool({
+     connectionLimit: 10,
+    host: 'localhost',
+    user: 'rachelblog',
+    password: 'Blog',
+   database: 'AngularBlog'
+ });
 
 var app = express();
 

@@ -24,3 +24,4 @@ exports.checkPassword = function (pw, hash) {
         });
     });
 }
+
